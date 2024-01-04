@@ -1,28 +1,32 @@
-#!/usr/bin/env python3
-from typing import List
+#!/usr/bin/python3
+""" pascal triangle
+"""
 
 
-def pascal_triangle(n: int) -> List[list]:
-    '''
-    Pascal triangle
-    '''
+def pascal_triangle(n):
+    """ returns pascal triangle
+    """
     if n <= 0:
         return []
 
-    if n == 1:
-        return [[1]]
+    pasTran = []
 
-    if n == 2:
-        return [[1], [1, 1]]
+    for i in range(n):
+        # first element
+        my_List = [1]
+        if i == 0:
+            pasTran.append(my_List)
+            continue
 
-    triangle = [[1], [1, 1]]
+        k = i - 1
+        for j in range(len(pasTran[k])):
+            if j + 1 == len(pasTran[k]):
+                # last element
+                my_List.append(1)
+                break
+            # Add two previous values to get current next value
+            nextVal = pasTran[k][j] + pasTran[k][j + 1]
+            my_List.append(nextVal)
+        pasTran.append(my_List)
 
-    for i in range(2, n):
-        temp = [1, 1]
-        for j in range(0, len(triangle[-1])-1):
-            a = triangle[-1][j]
-            b = triangle[-1][j+1]
-            temp.insert(-1, a + b)
-        triangle.append(temp)
-
-    return triangle
+    return pasTran
